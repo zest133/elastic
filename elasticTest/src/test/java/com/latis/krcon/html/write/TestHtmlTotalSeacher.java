@@ -96,15 +96,16 @@ public class TestHtmlTotalSeacher {
 		BoolQueryBuilder orBoolQuery = orQuery(queryList);
 		
 		//suit designed
+		SpanNearQueryBuilder snqb = getSpanNearQuery(getQueryParser("suit designed"));
 		
-		SpanNearQueryBuilder snqb =  spanNearQuery().clause(spanTermQuery("text", "suit")).clause(spanTermQuery("text", "designed"));
-		snqb.slop(0).inOrder(true);
-//		snqb.inOrder(true).collectPayloads(true);
-		System.out.println(snqb.toString());
 		
-//		BoolQueryBuilder totalBoolQuery = boolQuery().must(andBoolQuery).must(orBoolQuery).must(snqb);
+		//must not 
+		BoolQueryBuilder mustNotBoolQuery = orQuery(queryList);
+		
+		
+		BoolQueryBuilder totalBoolQuery = boolQuery().must(andBoolQuery).must(orBoolQuery).must(snqb).mustNot(mustNotBoolQuery);
 //		BoolQueryBuilder totalBoolQuery = boolQuery().must(andBoolQuery);
-		BoolQueryBuilder totalBoolQuery = boolQuery().must(snqb);
+//		BoolQueryBuilder totalBoolQuery = boolQuery().must(snqb);
 		
 		
 		SearchResponse scrollResp = client.prepareSearch("krcon")
@@ -130,6 +131,16 @@ public class TestHtmlTotalSeacher {
         }
 		
 		
+	}
+
+	public SpanNearQueryBuilder getSpanNearQuery(ArrayList<String> queryList) {
+		SpanNearQueryBuilder snqb = spanNearQuery();
+		for(String query : queryList){
+			snqb =  snqb.clause(spanTermQuery("text", "suit")).clause(spanTermQuery("text", "designed"));
+		}
+		snqb.slop(0).inOrder(true);
+		System.out.println(snqb.toString());
+		return snqb;
 	}
 
 	public BoolQueryBuilder orQuery(ArrayList<String> queryList) {
