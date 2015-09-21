@@ -16,6 +16,7 @@ HTML 파일 검색 엔진...
 2. 검색 방식 and 추가. 
 
 * 2015.9.23변경 사항.
+
 1.구글과 같은 검색엔진 구현. 기존 lucene을 es로 변경 
   porter stemming 방식으로 검색 입력값을 es로 변경하려 했으나 rest api를 사용해서 검색 결과를 가져와야함. 그래서 걍. lucene으로 
   구현하여, english analyzer의 porter stemming 값을 가져옴. 
