@@ -1,0 +1,61 @@
+
+{
+  "settings" : {
+    "analysis" : {
+      "analyzer" : {
+        "custom_analyzer" : {
+          "type" : "standard",
+          "max_token_length" : 70000
+        }
+      }
+    }
+  },
+  "mappings" : {
+    "html" : {
+      "_all" : { "enabled" : true },
+      "properties" : {
+        "breadcrumb" : {
+          "index_analyzer" : "custom_analyzer",
+          "type" : "string"
+        },
+        "categoryDesc" : {
+          "index_analyzer" : "custom_analyzer",
+          "type" : "string"
+        },
+        "categoryId" : {
+          "index" : "not_analyzed",
+          "type" : "integer"
+        },
+        "categoryTextId" : {
+          "index" : "not_analyzed",
+          "type" : "integer"
+        },
+        "categoryTitle" : {
+          "index_analyzer" : "custom_analyzer",
+          "type" : "string"
+        },
+        "categoryTree" : {
+          "index_analyzer" : "custom_analyzer",
+          "type" : "string"
+        },
+        "localKey" : {
+          "index" : "not_analyzed",
+          "type" : "string"
+        },
+        "text" : {
+          "index_analyzer" : "custom_analyzer",
+          "type" : "string",
+          "fields" : {
+            "html" : { 
+                	"type" : "string", 
+	            	"index_analyzer" : "custom_analyzer",
+	            	"index" : "not_analyzed",
+                    "ignore_above" : 256
+            	}
+          }
+        }
+        
+      }
+    }
+  }
+}
