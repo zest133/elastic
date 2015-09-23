@@ -36,4 +36,6 @@ HTML 파일 검색 엔진...
 2. 검색 방식은 porter stemming 값에 + prefix로 검색. 
 3. and , or, span near query, not and 추가. 
 
+*변경 사항. 
+1. Filter 추가. Lucene의 Chain 방식 같이 여러개의 필터를 추가. 
 
