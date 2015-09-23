@@ -31,7 +31,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import com.latis.krcon.html.dto.HtmlDTO;
 import com.latis.krcon.html.parser.HtmlWithTikaParser;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.*;
@@ -188,13 +187,11 @@ public class TestHtmlIndexer {
 		                .startObject("properties")// properties 선언. 
 		                    .startObject("breadcrumb") // field name
 		                        .field("type", "string") // field type
-		                        .field("index", "analyzed") // field analyzer
-		                        .field("index_analyzer", "custom_analyzer") // field analyzer
+		                        .field("index", "not_analyzed") // field analyzer
 		                    .endObject()
 		                    .startObject("categoryDesc")
 		                    	.field("type", "string") // field type
-		                        .field("index", "analyzed") // field analyzer
-		                        .field("index_analyzer", "custom_analyzer") // field analyzer
+		                        .field("index", "not_analyzed") // field analyzer
 		                    .endObject()
 		                    .startObject("categoryId")
 		                    	.field("type", "integer") // field type
@@ -203,16 +200,15 @@ public class TestHtmlIndexer {
 		                    .endObject()
 		                    .startObject("categoryTextId")
 		                    	.field("type", "integer") // field type
-                                    .field("index", "analyzed") // field analyzer
+//                                    .field("index", "not_analyzed") // field analyzer
 		                    .endObject()
 		                    .startObject("categoryTitle")
 		                    	.field("type", "string") // field type
-		                        .field("index", "analyzed") // field analyzer
-		                        .field("index_analyzer", "custom_analyzer") // field analyzer
+		                        .field("index", "not_analyzed") // field analyzer
 		                    .endObject()
 		                    .startObject("categoryTree")
 		                    	.field("type", "string") // field type
-		                        .field("index", "analyzed") // field analyzer
+		                        .field("index", "not_analyzed") // field analyzer
 		                    .endObject()
 		                    .startObject("localKey")
 		                    	.field("type", "string") // field type
