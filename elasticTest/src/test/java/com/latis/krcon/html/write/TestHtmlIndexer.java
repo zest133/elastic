@@ -54,6 +54,7 @@ public class TestHtmlIndexer {
 	              
 	    client = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress(host, port));
 	    htmlParser = new HtmlWithTikaParser();
+	    System.out.println("ddd");
 	}
 	
 	@After

@@ -100,7 +100,7 @@ public class TestHtmlTotalSeacher {
 		BoolQueryBuilder orBoolQuery = orQuery(queryList);
 		
 		//suit designed
-		String spanQueryStr = "minor adjustments".toLowerCase();
+		String spanQueryStr = "familiarity with".toLowerCase();
 		
 		SpanNearQueryBuilder snqb = getSpanNearQuery(spanQueryStr.split(" "));
 		
@@ -110,8 +110,8 @@ public class TestHtmlTotalSeacher {
 		
 		
 //		BoolQueryBuilder totalBoolQuery = boolQuery().must(andBoolQuery).must(orBoolQuery).mustNot(mustNotBoolQuery);
-//		BoolQueryBuilder totalBoolQuery = boolQuery().must(andBoolQuery).must(snqb);
-		BoolQueryBuilder totalBoolQuery = boolQuery().must(andBoolQuery);
+		BoolQueryBuilder totalBoolQuery = boolQuery().must(andBoolQuery).must(snqb);
+//		BoolQueryBuilder totalBoolQuery = boolQuery().must(andBoolQuery);
 //		BoolQueryBuilder totalBoolQuery = boolQuery().must(snqb);
 		
 		
