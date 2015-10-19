@@ -1,4 +1,4 @@
-package com.latis.krcon.html.write;
+package com.zest.elastic.html.write;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,17 +29,36 @@ import org.json.simple.parser.ParseException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.xml.sax.SAXException;
 
-import com.latis.krcon.html.parser.HtmlWithTikaParser;
+import com.zest.elastic.html.parser.HtmlWithTikaParser;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.*;
+
+
+@ContextConfiguration(locations={
+"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
 public class TestHtmlIndexer {
 
-	public final static String clusterName = "es_test";
-	public final static String host = "192.168.0.105";
-	public final static int port = 9300;
-	public final static String indexName="krcon";
+	
+	
+	
+	@Value("${clusterName}")
+	public static String clusterName;
+	
+	@Value("${host}")
+	public static String host;
+	
+	@Value("${port}")
+	public static int port;
+	
+	@Value("${indexName}")
+	public static String indexName;
 	
 	
 	public Client client;
@@ -279,7 +298,7 @@ public class TestHtmlIndexer {
 		
 		
 		
-		URL url = this.getClass().getClassLoader().getResource("html/kr-con.json"); // 이부분 수정. 
+		URL url = this.getClass().getClassLoader().getResource("html/kr-con.json"); 
 		String path = url.getPath();
 		File file = new File(path);
 		

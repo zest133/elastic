@@ -1,4 +1,4 @@
-package com.latis.elastic;
+package com.zest.elastic;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;

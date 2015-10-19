@@ -1,4 +1,4 @@
-package com.latis.elastic;
+package com.zest.elastic;
 
 import java.text.DateFormat;
 import java.util.Date;

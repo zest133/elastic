@@ -1,4 +1,4 @@
-package com.latis.elastic;
+package com.zest.elastic;
 
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 

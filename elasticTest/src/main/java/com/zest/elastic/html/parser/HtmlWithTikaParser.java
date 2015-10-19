@@ -1,4 +1,4 @@
-package com.latis.krcon.html.parser;
+package com.zest.elastic.html.parser;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -1,4 +1,4 @@
-package com.latis.krcon.html.write;
+package com.zest.elastic.html.search;
 
 import java.util.ArrayList;
 import java.util.HashSet;
