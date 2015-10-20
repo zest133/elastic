@@ -39,3 +39,7 @@ HTML 파일 검색 엔진...
 *변경 사항. 
 1. Filter 추가. Lucene의 Chain 방식 같이 여러개의 필터를 추가. 
 
+*변경사항
+1. 웹부분을 위해 branch 분리. 
+2. tiles 모듈 추가. 
+3. category, title, locale 검색 정보 추가 (sorting 도 같이)
