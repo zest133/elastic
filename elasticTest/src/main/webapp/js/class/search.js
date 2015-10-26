@@ -97,7 +97,7 @@ Search.prototype.checkSearchResultScroll = function(search) {
 						var totalScroll = $("body").prop("scrollHeight") - 525;
 						var currentScroll = $("body").scrollTop();
 
-						// console.log(totalScroll + ", " +currentScroll);
+						console.log(totalScroll + ", " +currentScroll);
 
 						if (currentScroll > totalScroll * 0.85) {
 							search.searchData.pageNum = search.searchData.pageNum + 1;

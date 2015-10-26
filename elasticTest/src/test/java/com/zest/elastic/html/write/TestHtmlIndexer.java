@@ -268,6 +268,98 @@ public class TestHtmlIndexer {
 		return mapping;
 	}
 	
+	
+	public static XContentBuilder setMappingAndSettings2() throws IOException {
+		System.out.println(Integer.MAX_VALUE);
+		XContentBuilder mapping = XContentFactory.jsonBuilder().startObject()
+		        .startObject("settings")
+//		            .startObject("index")
+//		                .field("number_of_shards", 1)
+//		                .field("number_of_replicas", 0)
+//	                .endObject()
+		                .startObject("analysis")
+		                    .startObject("analyzer")
+		                        .startObject("custom_analyzer")
+		                        	.field("type", "standard")
+		                        .endObject()
+		                        .startObject("custom_analyzer2")
+		                           // .field("type", "custom")
+		                            .field("tokenizer", "standard")
+		                            .field("filter", new String[]{ "lowercase","trim"})
+		                            .field("char_filter", new String[]{ "html_strip"})
+		                        .endObject()
+		                    .endObject()
+		                .endObject()
+		        .endObject()
+		        .startObject("mappings")//mapping 정의 
+		            .startObject("html")// type name
+		                .startObject("properties")// properties 선언. 
+		                    .startObject("breadcrumb") // field name
+		                        .field("type", "string") // field type
+		                        .field("index", "not_analyzed") // field analyzer
+		                    .endObject()
+		                    .startObject("categoryDesc")
+		                    	.field("type", "string") // field type
+		                        .field("index", "not_analyzed") // field analyzer
+		                    .endObject()
+		                    .startObject("categoryId")
+		                    	.field("type", "integer") // field type
+		                        .field("index", "analyzed") // field analyzer
+		                    	.field("index_analyzer", "custom_analyzer") // field analyzer
+		                    .endObject()
+		                    .startObject("categoryTextId")
+		                    	.field("type", "integer") // field type
+//                                    .field("index", "not_analyzed") // field analyzer
+		                    .endObject()
+		                    .startObject("categoryTitle")
+		                    	.field("type", "string") // field type
+		                        .field("index", "not_analyzed") // field analyzer
+		                    .endObject()
+		                    .startObject("categoryTree")
+		                    	.field("type", "string") // field type
+		                        .field("index", "not_analyzed") // field analyzer
+		                    .endObject()
+		                    .startObject("localKey")
+		                    	.field("type", "string") // field type
+		                        .field("index", "not_analyzed") // field analyzer
+		                    .endObject()
+		                    .startObject("text")
+		                    	.field("type", "string") // field type
+//		                        .field("term_vector", "with_positions_offsets_payloads") // field type
+//		                        .field("ignore_above", 256) // field type
+		                        .field("index", "analyzed") // field analyzer
+		                        .field("analyzer", "custom_analyzer2") // field analyzer
+		                        .field("index_analyzer", "custom_analyzer2") // field analyzer
+		                        
+		                        
+//								html strips filter로 해결 가능. 		                        
+		                        .startObject("fields")
+		                        	.startObject("html")
+		                        		.field("type", "string") // field type
+		                        		.field("ignore_above", 256) // field type
+		                        		.field("index", "not_analyzed") // field analyzer
+		                        		.field("analyzer", "custom_analyzer2") // field analyzer
+		                        		.field("index_analyzer", "custom_analyzer2") // field analyzer
+		                            .endObject()
+		                        .endObject()
+		                    .endObject()
+//		                    .startObject("html")
+//                        		.field("type", "string") // field type
+//                        		//.field("ignore_above", 256) // field type
+//                        		.field("index", "not_analyzed") // field analyzer
+//                        		.field("analyzer", "custom_analyzer") // field analyzer
+//                        		.field("index_analyzer", "custom_analyzer") // field analyzer
+//                            .endObject()
+		                .endObject()
+		            .endObject()
+		        .endObject()
+		    .endObject();
+		
+		return mapping;
+	}
+	
+	
+	
 	public void addDocument(){
 		
 		BulkProcessor bp = BulkProcessor.builder(client, new BulkProcessor.Listener() {

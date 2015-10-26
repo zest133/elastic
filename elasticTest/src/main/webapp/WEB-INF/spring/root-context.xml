@@ -22,5 +22,8 @@
 		<property name="fileEncoding" value="UTF-8"></property>
 	</bean>
 	<bean class="com.zest.elastic.filter.dto.FilterDTO"></bean>
+	<bean class="com.zest.elastic.html.search.dao.HtmlSearchDAOImpl"></bean>
+	<bean class="com.zest.elastic.html.category.search.dao.CategorySearchDAOImpl"></bean>
+	<bean class="com.zest.elastic.html.category.search.CategorySearch"></bean>
 	
 </beans>

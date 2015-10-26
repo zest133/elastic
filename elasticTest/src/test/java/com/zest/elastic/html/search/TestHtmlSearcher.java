@@ -21,6 +21,7 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.text.Text;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.FilterBuilders;
@@ -104,51 +105,55 @@ public class TestHtmlSearcher {
 //
 //	}
 	
-//	@Test
-//	public void searchAndHighlight(){
-//		QueryBuilder qb = prefixQuery("text", "boat");
-//		SearchResponse scrollResp = client.prepareSearch("krcon")
-//				.setTypes("html")
-//				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-////				.setScroll(new TimeValue(60000))
-//				.addHighlightedField("text")
-//				.setHighlighterFragmentSize(-1)//set it larger than the size of the field so that the only one fragment is returned and it contains the entire text of the field
-////				.setHighlighterNumOfFragments(1)
-//				.setHighlighterPreTags("<test class='boat'>")
-//				.setHighlighterPostTags("</test>")
-//				.setQuery(qb) .setFrom(0).setSize(10).execute().actionGet(); // 100 hits
-//		
-//		
-//		SearchHit[] results = scrollResp.getHits().getHits();
-//
-//        System.out.println("Current results: " + results.length);
-//        for (SearchHit hit : results) {
-//            System.out.println("------------------------------");
-//            Map<String,Object> result = hit.getSource();
-//            System.out.println(result.get("categoryId"));
-////            System.out.println(result);
-//            System.out.println("------------------------------1111111");
-//            System.out.println(hit.highlightFields().get("text"));
-//        }
-//	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@Test
-	public void baseWordSearch(){
-
-		ArrayList<String> test = getQueryParser("boats complete");
+	public void searchAndHighlight(){
+		QueryBuilder qb = prefixQuery("text", "relating");
+		SearchResponse scrollResp = client.prepareSearch("krcon2")
+				.setTypes("html")
+				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+//				.setScroll(new TimeValue(60000))
+				.addHighlightedField("text")
+				.setHighlighterFragmentSize(200)//set it larger than the size of the field so that the only one fragment is returned and it contains the entire text of the field
+//				.setHighlighterNumOfFragments(10)
+				
+				.setHighlighterNumOfFragments(1)
+				.setHighlighterPreTags("<test class='boat'>")
+				.setHighlighterPostTags("</test>")
+				.setQuery(qb) .setFrom(0).setSize(1).execute().actionGet(); // 100 hits
 		
-		System.out.println("Dddd\t"+test.toString());
+		
+		SearchHit[] results = scrollResp.getHits().getHits();
 
+        System.out.println("Current results: " + results.length);
+        for (SearchHit hit : results) {
+            System.out.println("------------------------------");
+            Map<String,Object> result = hit.getSource();
+            
+            System.out.println(result.get("categoryId"));
+//            System.out.println(result);
+            System.out.println("------------------------------1111111");
+            Text[] text = hit.highlightFields().get("text").getFragments();
+            System.out.println(text[0].string());
+        }
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	
+//	@Test
+//	public void baseWordSearch(){
+//
+//		ArrayList<String> test = getQueryParser("boats complete");
+//		
+//		System.out.println("Dddd\t"+test.toString());
+//
+//	}
 
 	public static ArrayList<String> getQueryParser(
 			String queryStr)  {

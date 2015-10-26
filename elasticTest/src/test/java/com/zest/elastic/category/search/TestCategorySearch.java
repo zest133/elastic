@@ -24,7 +24,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.zest.elastic.filter.dto.FilterDTO;
-
+import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.FilterBuilders.*;
 
 
 @ContextConfiguration(locations={
@@ -66,14 +67,42 @@ public class TestCategorySearch {
 		client.close();
 	}
 	
-	@Test
-	public void searchCategory(){
-		//search
-        QueryBuilder q = QueryBuilders.matchAllQuery();
-		SearchResponse scrollResp = client.prepareSearch("krcon")
+//	@Test
+//	public void searchFilter(){
+//		//search
+//        QueryBuilder q = QueryBuilders.matchAllQuery();
+//		SearchResponse scrollResp = client.prepareSearch("krcon")
 //				.setTypes("html")
+//				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+//				.setQuery(q).addSort("categoryTree", SortOrder.ASC) .setFrom(0).setSize(10).execute().actionGet(); // 100 hits
+//		
+//		
+//		SearchHit[] results = scrollResp.getHits().getHits();
+//
+//        System.out.println("Current results: " + results.length);
+//        ArrayList<String> titleList =  filterDTO.getTitleFilter();
+//        ArrayList<String> categoryList =  filterDTO.getBreadcrumbsFilter();
+//        ArrayList<String> localeList =  filterDTO.getLocaleFilter();
+//        for (SearchHit hit : results) {
+//            System.out.println("------------------------------");
+//            Map<String,Object> result = hit.getSource();
+//            System.out.println(result.get("breadcrumb"));
+//            categoryList.add(result.get("breadcrumb").toString());
+//            titleList.add(result.get("categoryTitle").toString());
+//            localeList.add(result.get("localKey").toString());
+//            System.out.println("------------------------------1111111");
+//        }
+//	}
+	
+	@Test
+	public void subSearchCategory(){
+		//search
+        QueryBuilder q = wildcardQuery("categoryTree", "0000.00e0.1530.????");
+        
+		SearchResponse scrollResp = client.prepareSearch("krcon")
+				.setTypes("html")
 				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-				.setQuery(q).addSort("categoryTree", SortOrder.ASC) .setFrom(0).setSize(10).execute().actionGet(); // 100 hits
+				.setQuery(q).addSort("categoryTree", SortOrder.ASC).setSize(100) .execute().actionGet(); // 100 hits
 		
 		
 		SearchHit[] results = scrollResp.getHits().getHits();
@@ -85,13 +114,35 @@ public class TestCategorySearch {
         for (SearchHit hit : results) {
             System.out.println("------------------------------");
             Map<String,Object> result = hit.getSource();
-            System.out.println(result.get("breadcrumb"));
-            categoryList.add(result.get("breadcrumb").toString());
-            titleList.add(result.get("categoryTitle").toString());
-            localeList.add(result.get("localKey").toString());
-//            System.out.println(result);
+            System.out.println(result.get("categoryTitle"));
             System.out.println("------------------------------1111111");
-//            System.out.println(hit.highlightFields().get("text"));
         }
 	}
+	
+//	@Test
+//	public void rootSearchCategory(){
+//		//search
+//        QueryBuilder q = matchQuery("categoryTree", "0000.00e0.1530");
+//        
+//		SearchResponse scrollResp = client.prepareSearch("krcon")
+//				.setTypes("html")
+//				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+//				.setQuery(q).addSort("categoryTree", SortOrder.ASC) .setFrom(0).setSize(10).execute().actionGet(); // 100 hits
+//		
+//		
+//		SearchHit[] results = scrollResp.getHits().getHits();
+//
+//        System.out.println("Current results: " + results.length);
+//        ArrayList<String> titleList =  filterDTO.getTitleFilter();
+//        ArrayList<String> categoryList =  filterDTO.getBreadcrumbsFilter();
+//        ArrayList<String> localeList =  filterDTO.getLocaleFilter();
+//        for (SearchHit hit : results) {
+//            System.out.println("------------------------------");
+//            Map<String,Object> result = hit.getSource();
+//            System.out.println(result.get("categoryTitle"));
+//            System.out.println("------------------------------1111111");
+//        }
+//	}
+
+	
 }

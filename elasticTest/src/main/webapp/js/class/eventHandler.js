@@ -83,21 +83,24 @@ EventHandler.prototype.setFrameOnLoadEvent = function() {
 				var result = $(this).contents().find("body");
 				$(this).contents().scroll(function(){
 					
-					var totalScroll = result.prop("scrollHeight") - 525;
+					var totalScroll = result.prop("scrollHeight") - 825;
 					var currentScroll = result.scrollTop();
+					
+					console.log(totalScroll + ", " +currentScroll);
+					
 					if(currentScroll > totalScroll * 0.85){
 						
 						$("#frameFormPageNum").val(Number($("#frameFormPageNum").val()) + 1);
 						$("#frameFormTotalCount").val($(this).contents().find("#resultCount").val());
 						
-						if($("#frameFormTotalCount").val() > 100){
-							var requestCount = 100*(Number($("#frameFormPageNum").val()) + 1);
+						if($("#frameFormTotalCount").val() > 12){
+							var requestCount = 12*(Number($("#frameFormPageNum").val()) + 1);
 							var temp = $("#frameFormTotalCount").val() / requestCount;
 //							console.log("requestCount="+requestCount+", totalCount=" + $("#frameFormTotalCount").val());
 							if(temp >= 1){
 								Search.prototype.appendSearch();
 							}else{
-								if((requestCount - $("#frameFormTotalCount").val()) < 100){
+								if((requestCount - $("#frameFormTotalCount").val()) < 12){
 									Search.prototype.appendSearch();
 								}
 							}
